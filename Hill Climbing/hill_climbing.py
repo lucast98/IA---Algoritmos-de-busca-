@@ -1,5 +1,5 @@
 import sys, random
-from labirinto import main, listLabirinto
+from labirinto import main, listLabirinto, plotLabirinto
 from math import e
 import numpy as np
 
@@ -74,13 +74,15 @@ def simulated_annealing(labirinto):
     return caminho, 1 #encontrou solucao
 
 if __name__ == '__main__':
-    n = 500
+    n = 10
     tempo = []
     lab = listLabirinto("labirinto.txt") #obtem labirinto a partir do arquivo texto
     rep = 0 #numero de repetições
     while rep <= n: #repete n vezes para obter a media do tempo de execução
-        sucesso, tempo_aux = main(simulated_annealing, lab)
+        sucesso, tempo_aux, finalData = main(simulated_annealing, lab)
         if sucesso == 1:
             rep = rep + 1 #incrementa numero de repetições
             tempo.append(tempo_aux) #lista com tempo de execução do algoritmo
+    data = np.random.rand(lab.coluna, lab.linha) * 20
+    plotLabirinto(lab.data, finalData, lab.linha, lab.coluna)
     print("Tempo médio de execução: ", np.mean(tempo))

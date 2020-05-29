@@ -1,4 +1,8 @@
+import matplotlib.pyplot as plt
 import time
+import numpy as np
+import colorama
+from colorama import Fore, Back, Style
 
 class labirinto:
     def __init__(self, data):
@@ -78,19 +82,38 @@ def listLabirinto(filename):
         except:
             pass
 
+def preencheLabirinto(data, finalData):
+    for i in range(0, len(finalData)):
+        data[list(finalData[i])[0]][list(finalData[i])[1]] = 4
+
+def plotLabirinto(data, finalData, linha, coluna):
+    preencheLabirinto(data, finalData)
+    colorama.init()
+    for i in range(0, linha):
+        for j in range(0, coluna-1):
+            if data[i][j] == 0:
+                print(Fore.RED + "-", end="")
+            elif data[i][j] == 1:
+                print(Fore.WHITE + "*", end="")
+            elif data[i][j] == 2 or data[i][j] == 3 or data[i][j] == 4:   
+                print(Fore.GREEN + "@", end="")      
+        print("")
+
 def main(function, lab):
     tempoInicio = time.time()
     caminho, result = function(lab)
     tempoFim = time.time()
     tempoTotal = (tempoFim - tempoInicio)
     caminhoCompleto = []
+    data = []
     a = caminhoCompleto.append
     if result == 1:
         print("Caminho Encontrado!")
         prev = caminho[0]
         for item in caminho:
+            data.append(item)
             a(direcao(prev, item))
             prev = item
-        print(" -> ".join(caminhoCompleto))
+        #print(" -> ".join(caminhoCompleto))
         a("Fim")
-    return result, tempoTotal
+    return result, tempoTotal, data
