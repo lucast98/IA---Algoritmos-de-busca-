@@ -34,7 +34,7 @@ class labirinto:
         except:
             return None
 
-    #Valor heuristico do estado (distancia euclidiana)
+    #Valor heuristico do estado (manhattan distance)
     def heuristica(self, est):
         return abs(self.estFinal[0] - est[0]) + abs(self.estFinal[1] - est[1])
 
@@ -110,10 +110,9 @@ def main(function, lab):
     if result == 1:
         print("Caminho Encontrado!")
         prev = caminho[0]
+        print(caminho)
         for item in caminho:
             data.append(item)
             a(direcao(prev, item))
             prev = item
-        #print(" -> ".join(caminhoCompleto))
-        a("Fim")
     return result, tempoTotal, data

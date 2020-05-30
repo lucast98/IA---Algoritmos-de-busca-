@@ -2,6 +2,8 @@ import sys, random
 from labirinto import main, listLabirinto, plotLabirinto
 from math import e
 import numpy as np
+import colorama
+from colorama import Fore, Back, Style
 
 #Função que utiliza o algoritmo Simple Hill Climbing
 def hill_climbing(labirinto):
@@ -12,7 +14,6 @@ def hill_climbing(labirinto):
         found = False
         for est in labirinto.proxEst(estAtual):
             if labirinto.verMelhor(est, estAtual): #verifica se o novo estado é melhor e, se for, anexa ao caminho já percorrido
-                #print(est)
                 caminho.append(est)
                 estAtual = est #atual é o novo estado
                 found = True #encontrou um estado melhor
@@ -71,7 +72,7 @@ def simulated_annealing(labirinto):
     return caminho, 1 #encontrou solucao
 
 if __name__ == '__main__':
-    n = 10
+    n = 100
     tempo = []
     lab = listLabirinto("labirinto.txt") #obtem labirinto a partir do arquivo texto
     rep = 0 #numero de repetições
@@ -82,4 +83,6 @@ if __name__ == '__main__':
             tempo.append(tempo_aux) #lista com tempo de execução do algoritmo
     data = np.random.rand(lab.coluna, lab.linha) * 20
     plotLabirinto(lab.data, finalData, lab.linha, lab.coluna)
-    print("Tempo médio de execução: ", np.mean(tempo))
+    #print("Tempo médio de execução: ", np.mean(tempo), "segundos")
+    colorama.init()
+    print(Fore.WHITE + "Tempo médio de execução: ", np.mean(tempo), "segundos")
