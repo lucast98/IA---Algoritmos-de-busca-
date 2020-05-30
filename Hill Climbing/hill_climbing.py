@@ -42,10 +42,7 @@ def simulated_annealing(labirinto):
     while estAtual != estFinal:
         found = False #Não encontrou a saída
         E1 = labirinto.heuristica(estAtual) #valor heuristico do estado atual
-        P = True
         for est in labirinto.proxEst(estAtual):
-            if P:
-                P = False
             if est == ant: #não é pra continuar no mesmo lugar
                 continue
             E2 = labirinto.heuristica(est) #valor heuristico do novo estado
