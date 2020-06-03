@@ -11,56 +11,8 @@ class labirinto:
         self.data = data
         self.estInicial = (0, self.data[0].index(3))
         self.estFinal = (self.linha-1, self.data[self.linha-1].index(2))
+        self.prioridade =99999999
 
-    #Define o proximo estado
-    def proxEst(self, estAtual):
-        try:
-            #vai para baixo
-            if estAtual[0] != self.linha - 1:
-                if estAtual != self.estFinal and self.data[estAtual[0] + 1][estAtual[1]] == 1:
-                    yield (estAtual[0] + 1, estAtual[1])
-            #vai para cima
-            if estAtual[0] != 0:
-                if estAtual != self.estInicial and self.data[estAtual[0] - 1][estAtual[1]] == 1:
-                    yield (estAtual[0] - 1, estAtual[1])
-            #vai para a direita
-            if estAtual[1] != self.coluna - 1:
-                if self.data[estAtual[0]][estAtual[1] + 1] == 1 or self.data[estAtual[0]][estAtual[1] + 1] == 2:
-                    yield (estAtual[0], estAtual[1]+1)
-            #vai para a esquerda
-            if estAtual[1] != 0:
-                if self.data[estAtual[0]][estAtual[1] - 1] == 1 or self.data[estAtual[0]][estAtual[1] - 1] == 2:
-                    yield (estAtual[0], estAtual[1]-1)
-        except:
-            return None
-
-    #Valor heuristico do estado (distancia euclidiana)
-    def heuristica(self, estAtual, estPossivel):
-        atual = abs(self.estFinal[0] - estAtual[0]) + abs(self.estFinal[1] - estAtual[1])
-        possivel = abs(self.estFinal[0] - estPossivel[0]) + abs(self.estFinal[1] - estPossivel[1])
-        return abs(atual + possivel)
-
-    #Verifica se o novo estado é melhor que o atual
-    def verMelhor(self, s1, s2, toprint = False):
-        val1 = self.heuristica(s1)
-        val2 = self.heuristica(s2)
-        if val1 == val2:
-            return s1[0] > s2[0]
-        else:
-            return bool(val1 < val2)
-
-#Direções a serem tomadas no labirinto
-def direcao(prev, cur):
-    if cur[0] > prev[0]:
-        return "Baixo"
-    elif cur[0] < prev[0]:
-        return "Cima"
-    elif cur[1] > prev[1]:
-        return "Direita"
-    elif cur[1] < prev[1]:
-        return "Esquerda"
-    else:
-        return "Inicio"
 
 def listLabirinto(filename):
     try:
@@ -74,7 +26,7 @@ def listLabirinto(filename):
          # - -> 0
         data = [[3 if i == '#' else 2 if i == '$' else 1 if i == '*' else 0 for i in j] for j in l]
         data.pop(0) #remove a primeira linha da lista
-        #print(data)
+        print(data)
         return labirinto(data)
     except:
         return None
@@ -83,6 +35,19 @@ def listLabirinto(filename):
             f.close() #fecha o arquivo
         except:
             pass
+
+#Direções a serem tomadas no labirinto
+def direcao(prev, cur):
+    if cur[0] > prev[0]:
+        return "Baixo"
+    elif cur[0] < prev[0]:
+        return "Cima"
+    elif cur[1] > prev[1]:
+        return "Direita"
+    elif cur[1] < prev[1]:
+        return "Esquerda"
+    else:
+        return "Inicio"
 
 def preencheLabirinto(data, finalData):
     for i in range(0, len(finalData)):
