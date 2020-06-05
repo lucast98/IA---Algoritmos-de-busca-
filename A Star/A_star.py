@@ -1,10 +1,8 @@
-import sys, random
 from labirinto import main, listLabirinto, plotLabirinto
-from math import e
 import numpy as np
 import colorama
 import heapq
-from colorama import Fore, Back, Style
+from colorama import Fore
 
 '''Classe nó'''
 class no:

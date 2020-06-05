@@ -1,9 +1,9 @@
-import sys, random
+import random
 from labirinto import main, listLabirinto, plotLabirinto
 from math import e
 import numpy as np
 import colorama
-from colorama import Fore, Back, Style
+from colorama import Fore
 
 #Função que utiliza o algoritmo Simple Hill Climbing
 def hill_climbing(labirinto):

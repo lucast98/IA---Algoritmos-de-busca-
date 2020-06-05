@@ -1,5 +1,5 @@
 from math import sqrt
-from labirinto import main, listLabirinto, plotLabirinto
+from labirinto import listLabirinto, plotLabirinto
 
 def getNeighbors(rows, columns, estAtual):
   row = estAtual[0]
