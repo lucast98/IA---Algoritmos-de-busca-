@@ -17,7 +17,7 @@ class no:
             return self.estado == outro.estado
         elif(isinstance(outro, tuple)): #verifica se é uma tupla
             return self.estado == outro
-        return False 
+        return False
 
 ''' Classe que representa listas '''
 class lista:
@@ -79,8 +79,8 @@ def Astar(labirinto):
                 caminho.add(estado, q)
                 return caminho.montaCaminho(), 1 #retorna o caminho e o valor 1 se encontrou caminho
             h = labirinto.heuristica(estado) #heuristica (manhattan distance)
-            f = g + h 
-            if aberta.melhor(f, estado): #verifica qual estado é o melhor 
+            f = g + h
+            if aberta.melhor(f, estado): #verifica qual estado é o melhor
                 continue
             if fechada.melhor(f, estado): #verifica qual estado é o melhor
                 continue
@@ -91,7 +91,7 @@ def Astar(labirinto):
 
 
 if __name__ == '__main__':
-    n = 100
+    n = 1
     tempo = []
     lab = listLabirinto("labirinto.txt") #obtem labirinto a partir do arquivo texto
     rep = 0 #numero de repetições

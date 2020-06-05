@@ -72,7 +72,7 @@ def simulated_annealing(labirinto):
     return caminho, 1 #encontrou solucao
 
 if __name__ == '__main__':
-    n = 100
+    n = 1
     tempo = []
     lab = listLabirinto("labirinto.txt") #obtem labirinto a partir do arquivo texto
     rep = 0 #numero de repetições

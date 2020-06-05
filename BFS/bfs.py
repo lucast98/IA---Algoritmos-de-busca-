@@ -1,4 +1,7 @@
+import time
+import numpy as np
 from labirinto import listLabirinto, plotLabirinto
+from colorama import Fore
 
 def getNeighbors(rows, columns, estAtual):
     row = estAtual[0]
@@ -76,16 +79,24 @@ def BFS(lab, estAtual, estFinal):
       explored.append(node)
 
 if __name__ == '__main__':
-    lab = listLabirinto("labirinto.txt")
-    estAtual = lab.estInicial
-    estFinal = lab.estFinal
-    caminho = []
+    n = 1
+    tempo = []
+    lab = listLabirinto("labirinto.txt") #obtem labirinto a partir do arquivo texto
+    rep = 0 #numero de repetições
 
-    caminho = BFS(lab, estAtual, estFinal)
+    while rep < n:
+      estAtual = lab.estInicial
+      estFinal = lab.estFinal
+      caminho = []
 
-    print(caminho)
+      tempoInicio = time.time()
+      caminho = BFS(lab, estAtual, estFinal)
+      tempoFim = time.time()
 
-    for line in lab.data:
-      print(line)
+      tempo.append(tempoFim - tempoInicio)
+      print('Caminho Encontrado!\n', caminho)
+
+      rep += 1
 
     plotLabirinto(lab.data, caminho, lab.linha, lab.coluna)
+    print(Fore.WHITE + "Tempo médio de execução: ", np.mean(tempo), "segundos")

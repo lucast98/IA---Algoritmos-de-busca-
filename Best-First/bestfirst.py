@@ -1,5 +1,8 @@
+import time
+import numpy as np
 from math import sqrt
 from labirinto import listLabirinto, plotLabirinto
+from colorama import Fore
 
 def getNeighbors(rows, columns, estAtual):
   row = estAtual[0]
@@ -66,7 +69,7 @@ def selectionSort(A, estFinal):
 
     A[i], A[min_idx] = A[min_idx], A[i]
 
-def DFS(lab, estAtual, estFinal, caminho):
+def BestFirst(lab, estAtual, estFinal, caminho):
   caminho.append(estAtual)
   neighbors = getNeighbors(len(lab.data), len(lab.data[0])-1, estAtual)
   selectionSort(neighbors, estFinal)
@@ -74,22 +77,30 @@ def DFS(lab, estAtual, estFinal, caminho):
   for n in neighbors:
     if estFinal not in caminho:
       if lab.data[n[0]][n[1]] > 0 and n not in caminho:
-        DFS(lab, n, estFinal, caminho)
+        BestFirst(lab, n, estFinal, caminho)
 
   if estFinal not in caminho:
     caminho.pop()
 
 if __name__ == '__main__':
-    lab = listLabirinto("labirinto.txt")
-    estAtual = lab.estInicial
-    estFinal = lab.estFinal
-    caminho = []
+    n = 1
+    tempo = []
+    lab = listLabirinto("labirinto.txt") #obtem labirinto a partir do arquivo texto
+    rep = 0 #numero de repetições
 
-    DFS(lab, estAtual, estFinal, caminho)
+    while rep < n:
+      estAtual = lab.estInicial
+      estFinal = lab.estFinal
+      caminho = []
 
-    print(caminho)
+      tempoInicio = time.time()
+      BestFirst(lab, estAtual, estFinal, caminho)
+      tempoFim = time.time()
 
-    for line in lab.data:
-      print(line)
+      tempo.append(tempoFim - tempoInicio)
+      print('Caminho Encontrado!\n', caminho)
+
+      rep += 1
 
     plotLabirinto(lab.data, caminho, lab.linha, lab.coluna)
+    print(Fore.WHITE + "Tempo médio de execução: ", np.mean(tempo), "segundos")
